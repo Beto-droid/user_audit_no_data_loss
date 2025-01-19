@@ -1,0 +1,29 @@
+services:
+  fast-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: prod_fast_api
+    container_name: prod_user_profile_audit_fast_api
+    volumes:
+      - .:/app
+    ports:
+      - "80:80"
+    depends_on:
+      - prod-db
+    env_file:
+      - .env
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80 --reload
+
+  prod-db:
+    image: postgres:17-alpine
+    container_name: prod_user_profile_audit_db
+    ports:
+      - "5444:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
