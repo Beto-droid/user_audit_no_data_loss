@@ -1,5 +1,4 @@
 
-
 def test_create_user_and_verify_audit_logs(client):
     response = client.post(
         "/users/",

@@ -25,6 +25,22 @@ services:
     env_file:
       - .env
 
+  pytest-fast-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pytest_fast_api_service
+    volumes:
+      - .:/app
+    depends_on:
+      - prod-db
+      - test-db
+    env_file:
+      - .env
+    command: pytest --disable-warnings --maxfail=1
+#    stdin_open: true
+#    tty: true
+
   test-db:
     image: postgres:17-alpine
     container_name: test_user_profile_audit_db
