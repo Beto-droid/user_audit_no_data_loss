@@ -21,9 +21,22 @@ services:
     ports:
       - "5444:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - prod_postgres_data:/var/lib/postgresql/data
     env_file:
       - .env
 
+  test-db:
+    image: postgres:17-alpine
+    container_name: test_user_profile_audit_db
+    ports:
+      - "5445:5432"
+    volumes:
+      - test_postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: test_user_profile_audit_db
+      POSTGRES_USER: test_user_profile_user
+      POSTGRES_PASSWORD: test_password
+
 volumes:
-  postgres_data:
+  prod_postgres_data:
+  test_postgres_data:

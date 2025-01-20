@@ -12,14 +12,14 @@ router = APIRouter(
 
 @router.get("/", response_model=List[UserDataLogsSchema])
 def query_users_by_parameters(
-    id: int | None = None,
+    logs_id: int | None = None,
     user_id: int | None = None,
     name: str | None = None,
     email: str | None = None,
     db: Session = Depends(get_db),
 ):
     users_audit_list = query_audit_by_parameters(
-        db, logs_id=id, user_id=user_id, name=name, email=email
+        db, logs_id=logs_id, user_id=user_id, name=name, email=email
     )
 
     if not users_audit_list:

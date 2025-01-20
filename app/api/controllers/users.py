@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from app.schemas.user import User as UserSchema
 from app.schemas.user import UserCreate as UserCreateSchema
@@ -48,14 +49,15 @@ def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@router.delete("/{user_id}", response_model=UserSchema)
+@router.delete("/{user_id}")
 def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
     db_user = get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(
             status_code=404, detail="The user with this id does not exist in the system"
         )
-    return delete_user_crud(db=db, user_id=user_id)
+    deleted_user = delete_user_crud(db=db, user_id=user_id)
+    return JSONResponse(content=deleted_user, status_code=200)
 
 
 @router.put("/{user_id}", response_model=UserSchema)

@@ -36,6 +36,7 @@ def log_status_change(db: Session, user_id: int, status: Status):
 def log_change(db: Session, user_id: int, change_type: Status, changed_fields: dict):
     log_entry = UserDataLogsModel(
         user_id=user_id,
+        user_id_record=user_id,
         change_type=change_type,
         changed_fields=changed_fields,
     )
@@ -119,15 +120,14 @@ def log_user_delete(func):
         user_id = kwargs.get("user_id")
         changed_fields = kwargs.get("changed_fields", {})
 
-        user = func(db, *args, **kwargs)
-
-        log_status_change(db, user_id=user.id, status=Status.DELETED)
+        log_status_change(db, user_id=user_id, status=Status.DELETED)
         log_change(
             db,
             user_id=user_id,
             change_type=Status.DELETED,
             changed_fields=changed_fields,
         )
+        user = func(db, *args, **kwargs)
         db.commit()
         return user
 
@@ -187,4 +187,4 @@ def delete_user_crud(db: Session, user_id: int):
     user = get_user(db, user_id=user_id)
     db.delete(user)
     db.commit()
-    return user
+    return {"deleted_user": {"id": user.id, "name": user.name, "email": user.email}}
