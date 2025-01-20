@@ -18,9 +18,6 @@ class UserDataLogs(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("user.id"))
-    user_data_status_id = Column(
-        Integer, ForeignKey("user_data_status.id"), nullable=True
-    )
     change_type = Column(SqlEnum(Status), nullable=False)
     changed_fields = Column(JSON, nullable=True)
     timestamp = Column(DateTime, default=func.now(), nullable=False)
