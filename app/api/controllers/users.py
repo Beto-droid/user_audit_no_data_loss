@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from app.schemas.user import User as UserSchema
@@ -50,7 +50,7 @@ def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
 
 
 @router.delete("/{user_id}")
-def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
+def delete_user_by_id(user_id: int, db: Session = Depends(get_db)):
     db_user = get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(

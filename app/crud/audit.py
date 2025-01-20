@@ -1,15 +1,10 @@
 from sqlalchemy.orm import Session
 
-from app.crud.user import get_user, get_user_by_name, get_user_by_email
+from app.crud.user import get_user_by_name, get_user_by_email
 from app.models import (
-    User as UserModel,
     UserDataLogs as UserDataLogsModel,
 )
-from app.schemas import (
-    UserDataLogs as UserDataLogsSchema,
-)
 
-from app.schemas.user_data_status import Status
 
 from typing import Optional, Type
 

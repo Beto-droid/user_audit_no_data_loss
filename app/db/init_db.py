@@ -1,5 +1,4 @@
 from app.db.session import Base, engine
-import app.models
 
 
 def init_db():

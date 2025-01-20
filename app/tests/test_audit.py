@@ -1,4 +1,3 @@
-from app.tests.conftest import client
 
 
 def test_create_user_and_verify_audit_logs(client):
